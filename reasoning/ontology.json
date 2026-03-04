@@ -1,0 +1,38 @@
+{
+  "is_a": {
+    "Coffee cup": "Liquid_Container",
+    "Wine glass": "Liquid_Container",
+    "Laptop": "Electronic_Device",
+    "Power plugs and sockets": "Electronic_Device",
+    "Kitchen knife": "Sharp_Object",
+    "Coin": "Small_Object",
+    "Toy": "Small_Object",
+    "Houseplant": "Toxic_Entity",
+    "Dog": "Vulnerable_Entity",
+    "Boy": "Vulnerable_Entity",
+    "Girl": "Vulnerable_Entity"
+  },
+  "hazard_rules": [
+    {
+      "name": "Short_Circuit_Hazard",
+      "subject_type": "Liquid_Container",
+      "relation": "NEAR",
+      "object_type": "Electronic_Device",
+      "template": "Phát hiện [{subject}] ở gần [{object}]. Chất lỏng gần thiết bị điện có thể gây chập mạch."
+    },
+    {
+      "name": "Laceration_Hazard",
+      "subject_type": "Sharp_Object",
+      "relation": "NEAR",
+      "object_type": "Vulnerable_Entity",
+      "template": "Phát hiện [{subject}] ở gần [{object}]. Vật sắc nhọn gần đối tượng dễ tổn thương có thể gây đứt/cắt."
+    },
+    {
+      "name": "Poisoning_Hazard",
+      "subject_type": "Toxic_Entity",
+      "relation": "NEAR",
+      "object_type": "Vulnerable_Entity",
+      "template": "Phát hiện [{subject}] ở gần [{object}]. Thực thể độc gần đối tượng dễ tổn thương có nguy cơ ngộ độc."
+    }
+  ]
+}
