@@ -1,0 +1,40 @@
+# Neo4j configuration for hazard detection knowledge graph
+neo4j:
+  # Connection settings for Docker Neo4j
+  uri: 'bolt://localhost:7687'
+  database: 'neo4j'
+  auth:
+    username: 'neo4j'
+    password: 'hazarddetect123'
+
+  # Graph schema settings
+  schema:
+    # Node labels
+    entity_labels:
+      - 'Liquid_Container'
+      - 'Electronic_Device'
+      - 'Sharp_Object'
+      - 'Small_Object'
+      - 'Toxic_Entity'
+      - 'Vulnerable_Entity'
+      - 'DetectedObject'
+
+    # Relationship types
+    relation_types:
+      - 'IS_A'
+      - 'NEAR'
+      - 'TOUCHING'
+      - 'ON_TOP_OF'
+      - 'DETECTED_IN'
+
+    # Constraints for performance
+    constraints:
+      - 'CREATE CONSTRAINT unique_object_id IF NOT EXISTS FOR (o:DetectedObject) REQUIRE o.id IS UNIQUE'
+      - 'CREATE CONSTRAINT unique_image_id IF NOT EXISTS FOR (i:Image) REQUIRE i.id IS UNIQUE'
+
+  # Query settings
+  queries:
+    hazard_patterns:
+      short_circuit: "MATCH (a:DetectedObject)-[:IS_A]->(:Liquid_Container),(b:DetectedObject)-[:IS_A]->(:Electronic_Device),(a)-[r:NEAR]->(b) RETURN a, b, r"
+      laceration: "MATCH (a:DetectedObject)-[:IS_A]->(:Sharp_Object),(b:DetectedObject)-[:IS_A]->(:Vulnerable_Entity),(a)-[r:NEAR]->(b) RETURN a, b, r"
+      poisoning: "MATCH (a:DetectedObject)-[:IS_A]->(:Toxic_Entity),(b:DetectedObject)-[:IS_A]->(:Vulnerable_Entity),(a)-[r:NEAR]->(b) RETURN a, b, r"

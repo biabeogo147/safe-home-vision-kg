@@ -70,37 +70,3 @@ Phân cấp các entity thành các siêu lớp (Superclasses) mang tính chất
 2.  **Query (Cypher/Python):** Duyệt đồ thị để khớp các properties kế thừa với các Rules đã định nghĩa.
 3.  **Explainability Output:** * *Label:* Cảnh báo `Poisoning_Hazard`.
     * *Trace:* "Phát hiện [Chó] ở gần [Cây nha đam]. Theo tri thức, cây nha đam là thực vật có độc đối với động vật dễ bị tổn thương."
-
----
-
-## 5. Cấu trúc Codebase (Project Layout)
-
-```text
-neuro_symbolic_hazard_detector/
-│
-├── data/                         # Xử lý dữ liệu
-│   ├── convert_yolo_format.py    # Xử lý Dataset định dạng YOLO
-│   ├── dataset_explorer.ipynb    # Jupyter Notebook để khám phá dataset
-│   └── download.py               # Script tải data (ví dụ: dùng FiftyOne)
-│
-├── vision/                       # Module CV
-│   ├── configs/                  # File yaml (classes, paths)
-│   ├── weights/                  # Chứa model weights
-│   ├── train.py                  # Script huấn luyện YOLO/DETR
-│   ├── val.py                    
-│   └── detector.py               # Class wrap quá trình inference
-│
-├── bridge/                       # Module Toán học/Không gian
-│   ├── spatial_rules.py          # Khai báo thresholds (distance, IoU)
-│   └── scene_graph_gen.py        # Convert BBoxes -> Triplets
-│
-├── reasoning/                    # Module Suy luận Đồ thị
-│   ├── ontology.json             # Khai báo Schema (IS_A) và Hazard Rules
-│   ├── graph_db.py               # Init NetworkX hoặc connect Neo4j
-│   └── inference_engine.py       # Inject facts, run query, trả giải thích
-│
-├── schemas/                      # Định nghĩa các lớp dữ liệu (Data Classes)
-│
-├── pipeline.py                   # Script chính: Vision -> Bridge -> Reasoning
-├── requirements.txt
-└── README.md
