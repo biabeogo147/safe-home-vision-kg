@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 
 @dataclass(frozen=True)
@@ -52,12 +52,14 @@ class YoloV26Detector:
         iou_thres: float = 0.45,
         device: str = "cpu",
         label_mapper: LabelMapper | Mapping[str, str] | None = None,
+        expected_model_hint: str = "yolov26",
     ) -> None:
         self.weights_path = str(weights_path)
         self.conf_thres = conf_thres
         self.iou_thres = iou_thres
         self.device = device
         self._label_mapper = _build_label_mapper(label_mapper)
+        self.expected_model_hint = expected_model_hint.lower().strip()
 
         try:
             from ultralytics import YOLO
@@ -67,6 +69,35 @@ class YoloV26Detector:
             ) from exc
 
         self._model = YOLO(self.weights_path)
+        self._validate_loaded_model_family()
+
+    def _validate_loaded_model_family(self) -> None:
+        """Fail fast if loaded weights do not look like the expected YOLOv26 family."""
+        if not self.expected_model_hint:
+            return
+
+        candidate_values = [self.weights_path]
+
+        ckpt_path = getattr(self._model, "ckpt_path", None)
+        if ckpt_path:
+            candidate_values.append(str(ckpt_path))
+
+        overrides = getattr(self._model, "overrides", None)
+        if isinstance(overrides, Mapping):
+            candidate_values.extend(str(value) for value in overrides.values() if isinstance(value, str))
+
+        model_core: Any = getattr(self._model, "model", None)
+        yaml_cfg = getattr(model_core, "yaml", None)
+        if isinstance(yaml_cfg, Mapping):
+            candidate_values.extend(str(value) for value in yaml_cfg.values() if isinstance(value, str))
+
+        normalized = " ".join(value.lower() for value in candidate_values)
+        if self.expected_model_hint not in normalized:
+            raise ValueError(
+                "Loaded Ultralytics model does not match expected family "
+                f"'{self.expected_model_hint}'. "
+                "Use YOLOv26 weights (or rename/configure hint) to avoid loading the wrong checkpoint."
+            )
 
     def predict(self, image_path: str | Path) -> list[Detection]:
         results = self._model.predict(

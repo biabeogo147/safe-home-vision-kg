@@ -33,6 +33,7 @@ def build_detector(config: dict[str, Any] | None = None):
             iou_thres=float(config.get("iou_thres") or os.getenv("YOLO_IOU_THRES", "0.45")),
             device=str(config.get("device") or os.getenv("YOLO_DEVICE", "cpu")),
             label_mapper=label_mapper,
+            expected_model_hint=str(config.get("expected_model_hint") or os.getenv("YOLO_EXPECTED_MODEL_HINT", "yolov26")),
         )
 
     if detector_name == "mock":
