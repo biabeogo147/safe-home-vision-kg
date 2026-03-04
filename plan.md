@@ -99,6 +99,8 @@ neuro_symbolic_hazard_detector/
 │   ├── graph_db.py               # Init NetworkX hoặc connect Neo4j
 │   └── inference_engine.py       # Inject facts, run query, trả giải thích
 │
+├── schemas/                      # Định nghĩa các lớp dữ liệu (Data Classes)
+│
 ├── pipeline.py                   # Script chính: Vision -> Bridge -> Reasoning
 ├── requirements.txt
 └── README.md
