@@ -1,0 +1,35 @@
+# YOLOv26 training classes (derived from plan.md)
+train_classes:
+  - coffee_cup
+  - wine_glass
+  - laptop
+  - power_plugs_and_sockets
+  - desk
+  - kitchen_knife
+  - paper_towel
+  - gas_stove
+  - table
+  - coin
+  - toy
+  - houseplant
+  - dog
+  - boy
+  - girl
+
+# Canonical mapping from model output label -> ontology label
+model_to_ontology:
+  coffee_cup: "Coffee cup"
+  wine_glass: "Wine glass"
+  laptop: "Laptop"
+  power_plugs_and_sockets: "Power plugs and sockets"
+  desk: "Desk"
+  kitchen_knife: "Kitchen knife"
+  paper_towel: "Paper towel"
+  gas_stove: "Gas stove"
+  table: "Table"
+  coin: "Coin"
+  toy: "Toy"
+  houseplant: "Houseplant"
+  dog: "Dog"
+  boy: "Boy"
+  girl: "Girl"

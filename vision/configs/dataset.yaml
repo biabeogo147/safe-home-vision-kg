@@ -1,0 +1,22 @@
+# YOLO dataset config
+path: data/processed/openimages_yolo
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: coffee_cup
+  1: wine_glass
+  2: laptop
+  3: power_plugs_and_sockets
+  4: desk
+  5: kitchen_knife
+  6: paper_towel
+  7: gas_stove
+  8: table
+  9: coin
+  10: toy
+  11: houseplant
+  12: dog
+  13: boy
+  14: girl

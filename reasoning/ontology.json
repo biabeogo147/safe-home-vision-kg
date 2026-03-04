@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "coffee_cup": {
+      "ontology_label": "Coffee cup",
+      "is_a": "Liquid_Container"
+    },
+    "wine_glass": {
+      "ontology_label": "Wine glass",
+      "is_a": "Liquid_Container"
+    },
+    "laptop": {
+      "ontology_label": "Laptop",
+      "is_a": "Electronic_Device"
+    },
+    "power_plugs_and_sockets": {
+      "ontology_label": "Power plugs and sockets",
+      "is_a": "Electronic_Device"
+    },
+    "desk": {
+      "ontology_label": "Desk",
+      "is_a": "Surface"
+    },
+    "kitchen_knife": {
+      "ontology_label": "Kitchen knife",
+      "is_a": "Sharp_Object"
+    },
+    "paper_towel": {
+      "ontology_label": "Paper towel",
+      "is_a": "Absorbent_Material"
+    },
+    "gas_stove": {
+      "ontology_label": "Gas stove",
+      "is_a": "Heat_Source"
+    },
+    "table": {
+      "ontology_label": "Table",
+      "is_a": "Surface"
+    },
+    "coin": {
+      "ontology_label": "Coin",
+      "is_a": "Small_Object"
+    },
+    "toy": {
+      "ontology_label": "Toy",
+      "is_a": "Small_Object"
+    },
+    "houseplant": {
+      "ontology_label": "Houseplant",
+      "is_a": "Toxic_Entity"
+    },
+    "dog": {
+      "ontology_label": "Dog",
+      "is_a": "Vulnerable_Entity"
+    },
+    "boy": {
+      "ontology_label": "Boy",
+      "is_a": "Vulnerable_Entity"
+    },
+    "girl": {
+      "ontology_label": "Girl",
+      "is_a": "Vulnerable_Entity"
+    }
+  },
+  "classes": {
+    "Liquid_Container": {},
+    "Electronic_Device": {},
+    "Surface": {},
+    "Sharp_Object": {},
+    "Absorbent_Material": {},
+    "Heat_Source": {},
+    "Small_Object": {},
+    "Toxic_Entity": {},
+    "Vulnerable_Entity": {}
+  },
+  "hazard_rules": [
+    {
+      "name": "Short_Circuit_Hazard",
+      "if": {
+        "subject_is_a": "Liquid_Container",
+        "relation": "NEAR",
+        "object_is_a": "Electronic_Device"
+      }
+    },
+    {
+      "name": "Laceration_Hazard",
+      "if": {
+        "subject_is_a": "Sharp_Object",
+        "relation": "NEAR",
+        "object_is_a": "Vulnerable_Entity"
+      }
+    },
+    {
+      "name": "Poisoning_Hazard",
+      "if": {
+        "subject_is_a": "Toxic_Entity",
+        "relation": "NEAR",
+        "object_is_a": "Vulnerable_Entity"
+      }
+    }
+  ]
+}
