@@ -1,3 +1,3 @@
-from vision.detector import Detection, MockDetector, YoloV26Detector
+from vision.detector import Detection, YoloV26Detector
 
-__all__ = ["Detection", "MockDetector", "YoloV26Detector"]
+__all__ = ["Detection", "YoloV26Detector"]

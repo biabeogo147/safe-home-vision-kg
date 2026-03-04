@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Mapping, Sequence
+from typing import Any, Callable, Mapping
 
 
 @dataclass(frozen=True)
@@ -17,29 +17,6 @@ LabelMapper = Callable[[str], str]
 
 def _identity_label_mapper(label: str) -> str:
     return label
-
-
-class MockDetector:
-    """Simple detector for local smoke tests without model dependencies."""
-
-    def __init__(
-        self,
-        mock_detections: Sequence[Detection] | None = None,
-        label_mapper: LabelMapper | Mapping[str, str] | None = None,
-    ) -> None:
-        self._mock_detections = list(mock_detections or [])
-        self._label_mapper = _build_label_mapper(label_mapper)
-
-    def predict(self, image_path: str | Path) -> list[Detection]:
-        _ = Path(image_path)
-        return [
-            Detection(
-                label=self._label_mapper(detection.label),
-                confidence=detection.confidence,
-                bbox_xyxy=detection.bbox_xyxy,
-            )
-            for detection in self._mock_detections
-        ]
 
 
 class YoloV26Detector:
@@ -111,8 +88,7 @@ class YoloV26Detector:
         detections: list[Detection] = []
         for result in results:
             names = result.names if isinstance(result.names, Mapping) else {}
-            boxes = result.boxes
-            for box in boxes:
+            for box in result.boxes:
                 class_id = int(box.cls.item())
                 raw_label = str(names.get(class_id, class_id))
                 mapped_label = self._label_mapper(raw_label)
