@@ -1,13 +1,13 @@
 """Unit tests for reasoning module."""
 
-import pytest
-from unittest.mock import patch, MagicMock
-from pathlib import Path
 import json
+from unittest.mock import patch, MagicMock
 
-from schemas import HazardAlert
+import pytest
+
 from reasoning.inference_engine import HazardInferenceEngine, MockInferenceEngine
 from reasoning.ontology_loader import OntologyLoader
+from schemas import HazardAlert
 
 
 class TestHazardAlert:

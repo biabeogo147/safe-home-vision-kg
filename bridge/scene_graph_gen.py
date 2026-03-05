@@ -1,11 +1,12 @@
 """Scene graph generator that converts detections to spatial relations."""
 
 from typing import List, Dict, Tuple
+
 import numpy as np
 from shapely.geometry import box as shapely_box
-from shapely.geometry import Point
-from shapely.prepared import prep
+
 from schemas import Detection, SpatialRelation
+
 
 class SceneGraphGenerator:
     """Converts object detections into spatial relations for reasoning."""

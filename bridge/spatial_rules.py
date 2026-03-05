@@ -1,9 +1,10 @@
 """Spatial relation rules and utilities for bridge module."""
 
+from typing import Tuple, Dict
+
 import numpy as np
-from typing import Tuple, List, Dict
 from shapely.geometry import box as shapely_box
-from shapely.prepared import prep
+
 
 class SpatialRuleEngine:
     """Engine for applying spatial relation rules to object detections."""

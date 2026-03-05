@@ -1,14 +1,14 @@
 """Unit tests for vision module."""
 
-import pytest
+from unittest.mock import patch
+
 import numpy as np
-from pathlib import Path
-from unittest.mock import patch, MagicMock
+import pytest
 
 from schemas import Detection
-from vision.detector import YOLOv8Detector, MockDetector
-from vision.utils import calculate_iou, calculate_center_distance, load_image, normalize_image
+from vision.detector import MockDetector
 from vision.trainer import YOLOTrainer
+from vision.utils import calculate_iou, calculate_center_distance, load_image, normalize_image
 
 
 class TestDetection:
@@ -152,10 +152,9 @@ class TestYOLOTrainer:
 def test_vision_module_imports():
     """Test that vision module imports correctly."""
     # This tests that all modules can be imported without errors
-    from vision import (
-        YOLOv8Detector, MockDetector, Detection, YOLOTrainer,
-        load_image, calculate_iou, calculate_center_distance
-    )
+    from vision.detector import YOLOv8Detector, MockDetector, Detection
+    from vision.trainer import YOLOTrainer
+    from vision.utils import load_image, calculate_iou, calculate_center_distance
 
     # Verify imports exist
     assert YOLOv8Detector is not None

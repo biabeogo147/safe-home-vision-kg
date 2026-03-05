@@ -1,12 +1,13 @@
 """YOLOv8 detector with configurable model loading and training."""
 
-import yaml
-from pathlib import Path
-from typing import List, Tuple, Dict, Optional
+from typing import List, Dict, Optional
+
 import cv2
-import numpy as np
+import yaml
 from ultralytics import YOLO
+
 from schemas import Detection
+
 
 class YOLOv8Detector:
     """YOLOv8-based object detector with configurable training."""

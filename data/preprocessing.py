@@ -1,10 +1,11 @@
 """Data preprocessing pipeline for Open Images dataset."""
 
-import os
 import json
-import yaml
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
+import yaml
+
 
 class DataPreprocessor:
     """Handles preprocessing of Open Images dataset."""
@@ -96,7 +97,6 @@ class DataPreprocessor:
             output_dir: Directory to save augmented images
         """
         import cv2
-        import numpy as np
         from pathlib import Path
 
         output_dir = Path(output_dir)

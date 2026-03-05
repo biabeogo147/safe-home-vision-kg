@@ -1,6 +1,7 @@
 """Main pipeline: Vision -> Bridge -> Reasoning."""
 
 from __future__ import annotations
+
 import argparse
 import json
 from pathlib import Path
@@ -8,7 +9,6 @@ from pathlib import Path
 from bridge.scene_graph_gen import SceneGraphGenerator
 from reasoning.inference_engine import HazardInferenceEngine, MockInferenceEngine
 from vision.detector import MockDetector, YOLOv8Detector
-from schemas import PipelineResults
 
 
 def run_pipeline(image_path: str, use_mock: bool = True, image_size: tuple = (640, 640)) -> dict:

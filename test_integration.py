@@ -1,10 +1,10 @@
 """Integration test for the complete neuro-symbolic hazard detection pipeline."""
 
 import json
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
 from pipeline import run_pipeline
-from schemas import PipelineResults
 
 
 def test_mock_pipeline():
@@ -83,24 +83,12 @@ def test_module_imports():
     print("=== Testing Module Imports ===")
 
     # Vision module
-    from vision.detector import YOLOv8Detector, MockDetector
-    from vision.trainer import YOLOTrainer
-    from vision.utils import (
-        load_image, resize_image, normalize_image, draw_detections,
-        calculate_iou, calculate_center_distance, save_image_with_detections,
-        get_image_dimensions, create_video_from_detections
-    )
 
     # Bridge module
-    from bridge.scene_graph_gen import SceneGraphGenerator, generate_scene_graph
-    from bridge.spatial_rules import SpatialRuleEngine, SpatialRelationValidator, calculate_spatial_features
 
     # Reasoning module
-    from reasoning.inference_engine import HazardInferenceEngine, MockInferenceEngine
-    from reasoning.ontology_loader import OntologyLoader
 
     # Pipeline
-    from pipeline import run_pipeline, print_results, save_results_to_file
 
     print("✅ All modules imported successfully!")
 

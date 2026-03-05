@@ -1,11 +1,14 @@
 """Hazard inference engine using Neo4j knowledge graph."""
 
-import yaml
-from typing import List, Dict, Optional, Tuple
-from neo4j import GraphDatabase
 import json
 from pathlib import Path
+from typing import List, Dict
+
+import yaml
+from neo4j import GraphDatabase
+
 from schemas import HazardAlert
+
 
 class HazardInferenceEngine:
     """Infers hazards using Neo4j knowledge graph."""

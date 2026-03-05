@@ -2,11 +2,9 @@
 
 import yaml
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict
 import pandas as pd
-from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib.pyplot as plt
-import seaborn as sns
 from detector import YOLOv8Detector
 
 class YOLOTrainer:

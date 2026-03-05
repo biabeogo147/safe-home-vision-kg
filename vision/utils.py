@@ -2,10 +2,9 @@
 
 import cv2
 import numpy as np
-from pathlib import Path
-from typing import Tuple, List, Optional
-from PIL import Image, ImageDraw
 from schemas import Detection
+from PIL import Image, ImageDraw
+from typing import Tuple, List, Optional, Dict
 
 def load_image(image_path: str) -> Optional[np.ndarray]:
     """Load image from file.
@@ -164,7 +163,7 @@ def get_image_dimensions(image_path: str) -> Tuple[int, int]:
             return img.size
     except Exception as e:
         print(f"Error getting dimensions for {image_path}: {e}")
-        return (0, 0)
+        return 0, 0
 
 def create_video_from_detections(image_paths: List[str], detections_list: List[List[Detection]],
                                output_path: str, fps: int = 30):

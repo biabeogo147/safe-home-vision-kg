@@ -1,10 +1,12 @@
 """Load and manage ontology for the knowledge graph."""
 
 import json
-from typing import Dict, List, Any
 from pathlib import Path
-from neo4j import GraphDatabase
+from typing import Dict, Any
+
 import yaml
+from neo4j import GraphDatabase
+
 
 class OntologyLoader:
     """Loads ontology data into Neo4j knowledge graph."""
