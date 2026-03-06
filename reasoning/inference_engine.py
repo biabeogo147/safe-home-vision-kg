@@ -13,7 +13,7 @@ from schemas import HazardAlert
 class HazardInferenceEngine:
     """Infers hazards using Neo4j knowledge graph."""
 
-    def __init__(self, config_path='../configs/neo4j_config.yaml'):
+    def __init__(self, config_path='configs/neo4j_config.yaml'):
         """Initialize inference engine with Neo4j configuration.
 
         Args:
@@ -100,8 +100,8 @@ class HazardInferenceEngine:
 
             # Create spatial relations
             for relation in scene_graph['relations']:
-                subj_id = f"{relation['subject']}_{next(i for i, d in enumerate(scene_graph['detections']) if d['label'] == relation['subject'])}"
-                obj_id = f"{relation['object']}_{next(i for i, d in enumerate(scene_graph['detections']) if d['label'] == relation['object'])}"
+                subj_id = f"{relation.subject}_{next(i for i, d in enumerate(scene_graph['detections']) if d['label'] == relation.subject)}"
+                obj_id = f"{relation.obj}_{next(i for i, d in enumerate(scene_graph['detections']) if d['label'] == relation.obj)}"
 
                 session.run("""
                     MATCH (s:DetectedObject {id: $subj_id})
@@ -109,10 +109,10 @@ class HazardInferenceEngine:
                     MERGE (s)-[r:%s]->(o)
                     SET r.confidence = $confidence,
                         r.distance = $distance
-                """ % relation['relation'],
+                """ % relation.relation,
                     subj_id=subj_id, obj_id=obj_id,
-                    confidence=relation['confidence'],
-                    distance=relation.get('distance', 0.0))
+                    confidence=relation.confidence,
+                    distance=relation.distance)
 
     def infer_hazards(self) -> List[HazardAlert]:
         """Run hazard inference on the current graph state.

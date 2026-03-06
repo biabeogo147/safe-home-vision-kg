@@ -5,7 +5,7 @@ training:
 
   # Model settings
   model:
-    architecture: 'yolov8n.pt'  # Pretrained model path
+    architecture: 'E:\models\yolov8\yolov8s.pt'  # Pretrained model path
     imgsz: 640
     epochs: 100
     batch_size: 16

@@ -11,7 +11,7 @@ from neo4j import GraphDatabase
 class OntologyLoader:
     """Loads ontology data into Neo4j knowledge graph."""
 
-    def __init__(self, config_path='../configs/neo4j_config.yaml'):
+    def __init__(self, config_path='configs/neo4j_config.yaml'):
         """Initialize ontology loader with Neo4j configuration.
 
         Args:

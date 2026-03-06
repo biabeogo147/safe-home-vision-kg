@@ -6,6 +6,8 @@ import argparse
 import json
 from pathlib import Path
 
+from PIL import Image, ImageDraw, ImageFont
+
 from bridge.scene_graph_gen import SceneGraphGenerator
 from reasoning.inference_engine import HazardInferenceEngine, MockInferenceEngine
 from vision.detector import MockDetector, YOLOv8Detector
@@ -117,8 +119,43 @@ def save_results_to_file(results: dict, output_path: str):
         results: Pipeline results dictionary
         output_path: Path to save results
     """
+    if not Path(output_path).parent.exists():
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+        json.dump(results, f, indent=2, ensure_ascii=False, default=float)
+
+
+def plot_image(image_path: str, detections: list, output_path: str = "output/bboxes_image.jpg"):
+    """Draw bounding boxes on image and save it.
+
+    Args:
+        image_path: Path to input image
+        detections: List of detections from results['detections']
+        output_path: Path to save boxed image
+    """
+    image = Image.open(image_path).convert("RGB")
+    font = ImageFont.truetype("arial.ttf", 80)
+    draw = ImageDraw.Draw(image)
+
+    for det in detections:
+        x1, y1, x2, y2 = det["bbox"]
+        label = det["label"]
+        confidence = det["confidence"]
+
+        # Draw bounding box
+        draw.rectangle([x1, y1, x2, y2], outline="red", width=7)
+
+        # Draw label
+        text = f"{label} {confidence:.2f}"
+        text_x = x1
+        text_y = max(0, y1 - 80)
+        draw.text((text_x, text_y), text, fill="red", font=font)
+
+    output_file = Path(output_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_file)
+    print(f"Bounding box image saved to: {output_file}")
 
 
 def main():
@@ -127,7 +164,10 @@ def main():
     parser.add_argument('image_path', help='Path to input image')
     parser.add_argument('--use_mock', action='store_true',
                        help='Use mock components instead of real ones')
-    parser.add_argument('--output', help='Path to save results JSON')
+    parser.add_argument('--output', type=str, default="output/results.json",
+                        help='Path to save results JSON')
+    parser.add_argument('--bbox_output', type=str, default="output/bboxes_image.jpg",
+                       help='Path to save image with bounding boxes')
     parser.add_argument('--image_width', type=int, default=640,
                        help='Image width for spatial calculations')
     parser.add_argument('--image_height', type=int, default=640,
@@ -155,6 +195,9 @@ def main():
         if args.output:
             save_results_to_file(results, args.output)
             print(f"\nResults saved to: {args.output}")
+
+        # Save image with bounding boxes
+        plot_image(args.image_path, results["detections"], args.bbox_output)
 
     except Exception as e:
         print(f"Error running pipeline: {e}")

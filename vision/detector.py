@@ -12,7 +12,7 @@ from schemas import Detection
 class YOLOv8Detector:
     """YOLOv8-based object detector with configurable training."""
 
-    def __init__(self, config_path='../configs/training_config.yaml'):
+    def __init__(self, config_path='configs/training_config.yaml'):
         """Initialize detector with configuration.
 
         Args:

@@ -10,7 +10,7 @@ from detector import YOLOv8Detector
 class YOLOTrainer:
     """Handles YOLOv8 training pipeline with validation and metrics."""
 
-    def __init__(self, config_path='../configs/training_config.yaml'):
+    def __init__(self, config_path='configs/training_config.yaml'):
         """Initialize trainer with configuration.
 
         Args:
